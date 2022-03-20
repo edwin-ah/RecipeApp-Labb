@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RecipeApp.MainPage">
+
+    <StackLayout>
+        <StackLayout.Background>
+            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                <GradientStop Color="#93a5cf" Offset="0.0"/>
+                <GradientStop Color="#e4efe9" Offset="0.75"/>
+            </LinearGradientBrush>
+        </StackLayout.Background>
+
+        <StackLayout VerticalOptions="Center">
+            <Label Text="Denna recept-app hämtar recept från ett API som heter 'Spoonacular'. Sök efter recept själv, eller slumpa fram ett recept." 
+                   Padding="50" HorizontalTextAlignment="Center" Margin="0,50,0,0" FontSize="16" TextColor="#000"/>
+            <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Center">
+                <Button x:Name="btnSearchPage" Clicked="btnSearchPage_Clicked" Text="Gå till söksidan"
+                        TextColor="#fff" BackgroundColor="#1a6558" Padding="10,12" BorderColor="#185d51" BorderWidth="1" CornerRadius="4" Margin="10" />
+
+                <Button x:Name="btnRandomRecipePage" Clicked="btnRandomRecipePage_Clicked" Text="Slumpa recept"
+                        TextColor="#fff" BackgroundColor="#1a6558" Padding="10,12" BorderColor="#185d51" BorderWidth="1" CornerRadius="4" Margin="10"/>
+            </StackLayout>
+        </StackLayout>
+        
+        
+    </StackLayout>
+
+</ContentPage>

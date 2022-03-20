@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:viewmodels="clr-namespace:RecipeApp.ViewModels" xmlns:model="clr-namespace:RecipeApp.Models"
+             x:Class="RecipeApp.Views.SearchPage"
+             x:DataType="viewmodels:SearchPageViewModel">
+    
+    <ContentPage.BindingContext>
+        <viewmodels:SearchPageViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="1,0">
+                    <GradientStop Color="#93a5cf" Offset="0.0"/>
+                    <GradientStop Color="#e4efe9" Offset="0.75"/>
+                </LinearGradientBrush>
+            </StackLayout.Background>
+
+            <StackLayout Orientation="Horizontal">
+                <SearchBar x:Name="searchBarSearchTxt"
+                           Placeholder="Sök efter recept" 
+                           Text="{Binding SearchText}" 
+                           SearchCommand="{Binding GetRecipesCommand}"
+                           TextChanged="searchBarSearchTxt_TextChanged"/>
+
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Utöka filter" HorizontalOptions="End"/>
+                    <Switch IsToggled="False" Toggled="Switch_Toggled" HorizontalOptions="End"/>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" WidthRequest="150">
+                <Button Command="{Binding GetRecipesCommand}" 
+                        Text="Sök" WidthRequest="150" Padding="15,12" TextColor="#fff" FontSize="16" BackgroundColor="#1a6558" BorderColor="#185d51" BorderWidth="1" CornerRadius="4" />
+            </StackLayout>
+
+            <StackLayout x:Name="stackFilters" IsVisible="false">
+                <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" Margin="20,0,0,0">
+                    <Label Text="Valt Kök"
+                            Margin="0,12,0,0" FontSize="18" FontAttributes="Bold"/>
+                    <Picker x:Name="pickerCuisine" 
+                        Title="Välj kök" 
+                        ItemsSource="{Binding Cuisines}"
+                        SelectedItem="{Binding SelectedCuisine}" 
+                        SelectedIndexChanged="pickerCuisine_SelectedIndexChanged"
+                        WidthRequest="150" Margin="55,0,0,0"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" Margin="20,0,0,0">
+                    <Label Text="Vald Diet"
+                            Margin="0,12,0,0" FontSize="18" FontAttributes="Bold"/>
+                    <Picker x:Name="pickerDiets"
+                        Title="Välj diet"
+                        ItemsSource="{Binding Diets}"
+                        SelectedItem="{Binding SelectedDiet}" 
+                        SelectedIndexChanged="pickerDiets_SelectedIndexChanged"
+                        WidthRequest="150" Margin="50,0,0,0"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand" Margin="20,0,0,0">
+                    <Label Text="Vald Intolerans"
+                               Margin="0,12,0,0" FontSize="18" FontAttributes="Bold"/>
+                    <Picker x:Name="pickerIntolerances" 
+                            Title="Välj intolerans" 
+                            ItemsSource="{Binding Intolerances}"
+                            SelectedItem="{Binding SelectedIntolerance}" 
+                            SelectedIndexChanged="pickerIntolerances_SelectedIndexChanged"
+                            HorizontalOptions="End"
+                            WidthRequest="150" Margin="4,0,0,0"/>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout>
+                <StackLayout>
+                    <ListView x:Name="listRecipes" 
+                              ItemsSource="{Binding RecipeList}"
+                              IsRefreshing="{Binding IsBusy}"
+                              ItemTapped="listRecipes_ItemTapped"
+                              HasUnevenRows="True">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Recipe">
+                                <ViewCell>
+                                    <StackLayout>
+                                    <Frame BackgroundColor="#fff" Margin="70,10,70,20" CornerRadius="10" Padding="0">
+                                        <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                                            <Frame CornerRadius="50" Padding="0" IsClippedToBounds="True" HasShadow="False">
+                                                <Image Source="{Binding Image}" HeightRequest="200" WidthRequest="200" MinimumHeightRequest="200" MinimumWidthRequest="200"/>
+                                            </Frame>
+                                            <Label Text="{Binding Title}" Margin="0,0,0,15" FontSize="18" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                                        </StackLayout>
+                                    </Frame>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+                <StackLayout IsVisible="{Binding HasNoResults}" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="Inga resultat hittades" Margin="0,0,0,15" FontSize="18" FontAttributes="Bold" LineBreakMode="WordWrap" TextColor="#000"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
